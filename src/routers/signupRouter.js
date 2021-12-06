@@ -1,20 +1,18 @@
 import '../config.js';
 import bcrypt from 'bcrypt';
 import express from 'express';
-import * as signupController from '../controllers/signupController.js';
+import * as userController from '../controllers/userController.js';
 
 const saltRounds = Number(process.env.SALT_ROUNDS);
 // const myPlaintextPassword = process.env.MY_PASSWORD;
 
 const signupRouter = express.Router();
 
-
 // READ ALL
 signupRouter.get('/', async (_req, res) => {
-    const users = await signupController.readAllUsers();
-    res.json(users);
-  });
-  
+  const users = await userController.readAllUsers();
+  res.json(users);
+});
 
 // CREATE
 signupRouter.post('/create', async (req, res) => {
@@ -27,23 +25,23 @@ signupRouter.post('/create', async (req, res) => {
             firstName: userObj.firstName,
             lastName: userObj.lastName,
             userName: userObj.userName,
+            accessGroups: 'loggedInUsers, notAuthorisedUsers',
             hash,
             email: userObj.email,
           };
-          const result = await signupController.createUser(dbUser);
+          const savedDBUser = await userController.createUser(dbUser);
           res.json({
-            result,
+            savedDBUser,
           });
         });
       });
 });
 
-
 // READ ONE
 signupRouter.get('/user/:id', async (req, res) => {
   const id = req.params.id;
   res.json({
-    user: await signupController.readOneUser(id),
+    user: await userController.readOneUser(id),
   });
 });
 
@@ -51,7 +49,7 @@ signupRouter.get('/user/:id', async (req, res) => {
 signupRouter.patch('/update/:id', async (req, res) => {
   const id = req.params.id;
   const updateFields = req.body;
-  const result = await signupController.updateUser(id, updateFields);
+  const result = await userController.updateUser(id, updateFields);
   res.json({
     result,
   });
@@ -60,7 +58,7 @@ signupRouter.patch('/update/:id', async (req, res) => {
 // DELETE
 signupRouter.delete('/delete/:id', async (req, res) => {
   const id = req.params.id;
-  const result = await signupController.deleteUser(id);
+  const result = await userController.deleteUser(id);
   res.json({
     result,
   });

@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 
-const loginschema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    username: { type: String, required: true },
+    userName: { type: String, required: true },
     email: { type: String, required: true },
     accessGroups: { type: String, required: true },
-    password: { type: String, required: true },
+    hash: { type: String, required: true },
   },
   {
     timestamps: true,
@@ -15,6 +15,6 @@ const loginschema = new mongoose.Schema(
   }
 );
 
-const LoginModel = mongoose.model('Login_users', loginschema);
+const UserModel = mongoose.model('UserModel', userSchema,'users');
 
-export default LoginModel;
+export default UserModel;
