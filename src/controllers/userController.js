@@ -1,5 +1,7 @@
 import UserModel from "../models/userModel.js";
 
+// SIGNUP
+
 export const createUser = async (userObj) => {
   return await UserModel.create(userObj);
 };
@@ -21,3 +23,6 @@ export const updateUser = async (id, updateFields) => {
 export const deleteUser = async (id) => {
   return await UserModel.findByIdAndRemove(id);
 };
+
+// LOGIN
+

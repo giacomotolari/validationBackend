@@ -25,7 +25,7 @@ signupRouter.post('/create', async (req, res) => {
             firstName: userObj.firstName,
             lastName: userObj.lastName,
             userName: userObj.userName,
-            accessGroups: 'loggedInUsers, notAuthorisedUsers',
+            accessGroups: 'loggedInUsers,notYetApprovedUsers',
             hash,
             email: userObj.email,
           };
